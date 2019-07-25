@@ -2,7 +2,8 @@ import {
     Route,
     Switch,
 } from 'react-router-dom';
-import HomeIndex from './pages/HomeIndex';
+import Home from './pages/Home';
+import Space from './pages/Space';
 
 import {
     withRouter
@@ -23,10 +24,14 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
+
 import HomeIcon from '@material-ui/icons/Home';
 import WebIcon from '@material-ui/icons/Web';
 import MenuIcon from '@material-ui/icons/Menu';
 import BookIcon from '@material-ui/icons/Book';
+import MoreVertIcon from '@material-ui/icons/MoreVert';
 
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
@@ -34,31 +39,21 @@ import {
     makeStyles,
     useTheme
 } from '@material-ui/core/styles';
-
+import { FaGithub } from 'react-icons/fa';
 
 const drawerWidth = 240;
 
 const useStyles = makeStyles(theme => ({
     root: {
-        display: 'flex',
     },
     drawer: {
-        [theme.breakpoints.up('sm')]: {
             width: drawerWidth,
-            flexShrink: 0,
-        },
     },
     appBar: {
-        marginLeft: drawerWidth,
-        [theme.breakpoints.up('sm')]: {
-            width: `calc(100% - ${drawerWidth}px)`,
-        },
+        width: "100%",
     },
     menuButton: {
         marginRight: theme.spacing(2),
-        [theme.breakpoints.up('sm')]: {
-            display: 'none',
-        },
     },
     toolbar: theme.mixins.toolbar,
     drawerPaper: {
@@ -69,9 +64,14 @@ const useStyles = makeStyles(theme => ({
         paddingLeft: 20,
     },
     content: {
-        flexGrow: 1,
         padding: theme.spacing(3),
+        width: "100%",
     },
+    toolbarButtons: {
+        marginLeft: 'auto',
+        marginRight: -12,
+    },
+
 }));
 
 
@@ -81,11 +81,24 @@ function ResponsiveDrawer(props) {
     } = props;
     const theme = useTheme()
     const classes = useStyles();
+    const [swInited, setSwInited] = React.useState(false)
 
+    const [version,setVersion] = React.useState("Not Available")
     const [mobileOpen, setMobileOpen] = React.useState(false);
     var a = window.location.href.split('/')
-    const [nav, setNav] = React.useState(a[5]||"about"); 
+    const [nav, setNav] = React.useState(a[5] || "about");
 
+    const [anchorEl, setAnchorEl] = React.useState(null);
+
+    function handleAnchor(event) {
+    setAnchorEl(anchorEl ? null : event.currentTarget);
+    }
+    function openGitHub() {
+      window.open("https://github.com/nucleome")
+    }
+    function openDocs() {
+      window.open("http://doc.nucleome.org/classic")
+    }
     function handleDrawerToggle() {
         setMobileOpen(!mobileOpen);
     }
@@ -93,28 +106,69 @@ function ResponsiveDrawer(props) {
     function handleLink(d) {
         return function handle() {
             setNav(d)
-            props.history.push("./" + d) 
+            props.history.push("./" + d)
         }
 
     }
+    function handleClose() {
+      setAnchorEl(null);
+    }
+    const getVersion = () => {
+    if (navigator.serviceWorker) {
+        if (navigator.serviceWorker.controller) {
+            var messageChannel = new MessageChannel();
+            messageChannel.port1.onmessage = function(event) {
+                setVersion(event.data.version)
+            }
+            navigator.serviceWorker.controller.postMessage({
+                "command": "version",
+            }, [messageChannel.port2]);
+        } else {
+            console.log("No Service Worker");
+        }
+    }
+}
+const initVersion = () => {
+   if (!swInited) {
+    if (navigator.serviceWorker) {
+    console.log("ServiceWorkersSupported");
+    navigator.serviceWorker.register('/sw.js', {
+            scope: '/'
+        })
+        .then(function(reg) {
+            console.log("ServiceWorkerstered", reg);
+            setSwInited(true)
+            getVersion()
+        })
+        .catch(function(error) {
+            console.log("Failedegister ServiceWorker", error);
+         });
+   } else {
+     console.log("Service Worker Not Supported")
+     setSwInited(true)
+   }
+  }
+}
+
 
     const drawer = (
         <div>
       <div className={classes.toolbar}> 
         <div className={classes.drawerHeader}>
-      <Typography variant="h6" color="primary" >Nucleome Browser</Typography>
+        <Typography variant="h6" color="primary" >Nucleome Browser</Typography>
+        <Typography variant="subtitle1" color="primary" >client version</Typography>
+        <Typography variant="subtitle1" color="primary" >{version}</Typography>
               </div>
       </div>
       <Divider />
         <List>
             {[
-              {id:'about',icon:<HomeIcon />},
-              {id:'documentation', icon:<BookIcon />},
-              {id:'lab',icon:<WebIcon />},
+              {label:"Home",id:'about',icon:<HomeIcon />},
+              {label:"Panel Space",id:'space', icon:<BookIcon />},
               ].map((d, index) => (
               <ListItem button key={d.id} onClick={handleLink(d.id)}>
                 <ListItemIcon>{d.icon}</ListItemIcon>
-                <ListItemText primary={d.id} />
+                <ListItemText primary={d.label} />
              </ListItem>
             ))}
           </List>
@@ -123,6 +177,7 @@ function ResponsiveDrawer(props) {
     </div>
     );
 
+    initVersion()
     return (
         <div className={classes.root}>
       <CssBaseline />
@@ -140,11 +195,31 @@ function ResponsiveDrawer(props) {
           <Typography variant="h6" noWrap>
         {nav}
             </Typography>
+      <section className={classes.toolbarButtons}>     
+      <IconButton
+            color="inherit"
+            aria-label="Docs"
+            edge="start"
+            onClick={openDocs}
+
+            >
+             <BookIcon/>
+            </IconButton>
+    <IconButton color="inherit" aria-label="GitHub Home" onClick={openGitHub}>
+        <FaGithub/>        
+    </IconButton>
+    <IconButton color="inherit" aria-label="More Options" onClick={handleAnchor}>
+        <MoreVertIcon />
+     </IconButton>
+          <Menu id="simple-menu" anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={handleClose}>
+          <MenuItem onClick={handleClose}>Profile</MenuItem>
+          <MenuItem onClick={handleClose}>Logout</MenuItem>
+        </Menu>
+      </section> 
         </Toolbar>
       </AppBar>
       <nav className={classes.drawer}>
-        h{/* The implementation can be swapped with js to avoid SEO duplication of links. */}
-        <Hidden smUp implementation="css">
+        <Hidden>
           <Drawer
             container={container}
             variant="temporary"
@@ -162,25 +237,15 @@ function ResponsiveDrawer(props) {
             {drawer}
           </Drawer>
         </Hidden>
-        <Hidden xsDown implementation="css">
-          <Drawer
-            classes={{
-              paper: classes.drawerPaper,
-            }}
-            variant="permanent"
-            open
-          >
-           {drawer}
-          </Drawer>
-        </Hidden>
       </nav>
       <main className={classes.content}>
         <div className={classes.toolbar}>
-         Main Header
+        
         </div>
           <Switch>
-          <Route path='/static/build/about' component={HomeIndex}/>
-          <Route exact path='/static/build/' component={HomeIndex}/>
+          <Route path='/entry/about'  component={() => <Home version={version}/>}/>
+          <Route exact path='/entry/' component={() => <Home version={version}/>}/>
+          <Route exact path='/entry/space' component={() => <Space version={version}/>}/>
         </Switch>
         </main>
     </div>
@@ -192,6 +257,7 @@ ResponsiveDrawer.propTypes = {
     // You won't need it on your project.
     container: PropTypes.object,
 };
+
 
 const App = withRouter(ResponsiveDrawer);
 export default App;

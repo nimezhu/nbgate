@@ -82,8 +82,12 @@ const styles = theme => ({
     boxShadow: theme.shadows[5],
     padding: theme.spacing(2, 4, 4),
     outline: 'none',
-    textAlign:"center",
+    textAlign:'center',
   },
+    toolbarButtons: {
+        marginLeft: 'auto',
+        marginRight: -12,
+    }
 
 });
 

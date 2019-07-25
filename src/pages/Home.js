@@ -6,6 +6,8 @@ import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
 import NbIcon from "../module/NbIcon";
 import NbBanner from "../module/NbBanner";
+import EntryDiv from "../module/Entry";
+import CardMedia from '@material-ui/core/CardMedia';
 
 import Modal from '@material-ui/core/Modal';
 
@@ -33,10 +35,10 @@ function handleClick() {
 
 function Index(props) {
     const {
-        classes
+        classes,
+        version
     } = props
      const [open, setOpen] = React.useState(false);
-     const [version,setVersion] = React.useState("Not Available")
      const [modalStyle] = React.useState(getModalStyle);
   const handleOpen = () => {
     setOpen(true);
@@ -45,25 +47,7 @@ function Index(props) {
   const handleClose = () => {
     setOpen(false);
   };
-
-  const getVersion = () => {
-      console.log("get version")
-    if (navigator.serviceWorker) {
-        if (navigator.serviceWorker.controller) {
-            var messageChannel = new MessageChannel();
-            messageChannel.port1.onmessage = function(event) {
-                setVersion(event.data.version)
-            }
-            navigator.serviceWorker.controller.postMessage({
-                "command": "version",
-            }, [messageChannel.port2]);
-        } else {
-            console.log("No Service Worker");
-        }
-    }
-}
-getVersion()
-    return (
+     return (
         <div>
     <Modal 
         aria-labelledby="simple-modal-title"
@@ -75,18 +59,14 @@ getVersion()
         <div className={classes.modal} style={modalStyle}>
 
         <Typography type="div">
-
-        <Button variant="outlined" title="Genome Browser" onClick={handleClick}>Genome Browser</Button>
+         
         </Typography>
-        <hr/>
-        <Typography type="div">
-        <Button variant="outlined" title="K562 Cell Line" color="primary" onClick={handleOpen}>K562</Button>
-        </Typography>
+        <EntryDiv classes={classes}/>
         </div>
     </Modal>
-    <Container maxWidth="sm">
+    <Container maxWidth="lg">
       <Box>
-       <NbIcon scale="0.4"/>
+       <NbIcon scale="0.3"/>
       </Box>
       <Box>
          <NbBanner classes={classes}/>
@@ -94,7 +74,7 @@ getVersion()
         <Button variant="outlined" title="Open Web Application" color="secondary" size="large" onClick={handleOpen}>Start</Button>
         </Box>
         <hr/>
-        <Typography type="p">
+        <Typography type="p" style={{textAlign:"center"}}>
             A Multi Modality Genome Data Browser
         </Typography>
       </Box>
@@ -114,11 +94,16 @@ getVersion()
       </Grid>
       </div>
       <footer className={classes.footer}>
-        <Typography variant="h6" align="center" gutterBottom>
-        </Typography>
         <Typography variant="subtitle1" align="center" color="textSecondary" component="p">
             client version: {version} 
         </Typography>
+        <Typography variant="subtitle1" align="center" gutterBottom>
+        4D Nucleome and Carnegie Mellon University
+        <CardMedia
+            image="./images/cmu_logo.jpg"
+        />
+        </Typography>
+
       </footer>
     </Container>
     </div>

@@ -11,28 +11,13 @@ import { BrowserRouter } from 'react-router-dom';
 import theme from './theme';
 import App from './App';
 //import * as serviceWorker from './serviceWorker';
-if (navigator.serviceWorker) {
-    console.log("ServiceWorkersSupported");
-    navigator.serviceWorker.register('/sw.js', {
-            scope: '/'
-        })
-        .then(function(reg) {
-            console.log("ServiceWorkerstered", reg);
-            //TODO Get Version And Set Version 
-        })
-        .catch(function(error) {
-            console.log("Failedegister ServiceWorker", error);
-        });
-} else {
-  console.log("Service Worker Not Supported")
-}
 
 ReactDOM.render((
   <ThemeProvider theme={theme}>
     <BrowserRouter >
     <CssBaseline />
         <Switch>
-          <Route path='/static/build/' component={App}/>
+          <Route path='/entry/' component={App}/>
         </Switch>
 
     </BrowserRouter>

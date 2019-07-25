@@ -43,7 +43,7 @@ class NbIcon extends React.Component {
 
         function getBand(genome, callback) {
             var chrBands = {}
-            fetch("/static/build/data/" + genome + ".cytoBand.txt", {
+            fetch("/entry/data/" + genome + ".cytoBand.txt", {
                 "credentials": "include"
             }).then(function(res) {
                 res.text().then(function(d) {
