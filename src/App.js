@@ -83,7 +83,7 @@ function ResponsiveDrawer(props) {
     const classes = useStyles();
     const [swInited, setSwInited] = React.useState(false)
 
-    const [version,setVersion] = React.useState("Not Available")
+    const [version,setVersion] = React.useState(null)
     const [mobileOpen, setMobileOpen] = React.useState(false);
     var a = window.location.href.split('/')
     const [nav, setNav] = React.useState(a[5] || "about");
@@ -156,9 +156,13 @@ const initVersion = () => {
       <div className={classes.toolbar}> 
         <div className={classes.drawerHeader}>
         <Typography variant="h6" color="primary" >Nucleome Browser</Typography>
-        <Typography variant="subtitle1" color="primary" >client version</Typography>
-        <Typography variant="subtitle1" color="primary" >{version}</Typography>
-              </div>
+        {version !== null ?
+        <Typography variant="subtitle1" align="center" color="textSecondary" component="p">
+            client version: {version} 
+        </Typography>
+        : null}
+      
+        </div>
       </div>
       <Divider />
         <List>

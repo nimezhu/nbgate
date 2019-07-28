@@ -17,17 +17,33 @@ import {
 import styles from "../styles";
 import classNames from "classnames";
 
-
+/*
 function getModalStyle() {
-    const top = 25;
-    const left = 10;
+    const top = 50;
+    const left = 50;
     return {
       top: `${top}%`,
-      margin:'auto',
+      //margin:'auto',
+      display: 'flex !important',
+      alignItems: 'center',
       left: `${left}%`
     };
   }
+*/
+function rand() {
+  return Math.round(Math.random() * 20) - 10;
+}
 
+function getModalStyle() {
+  const top = 50 + rand();
+  const left = 50 + rand();
+
+  return {
+    top: `${top}%`,
+    left: `${left}%`,
+    transform: `translate(-${top}%, -${left}%)`,
+  };
+}
 function handleClick() {
     window.open("/v1/main.html")
 }
@@ -50,11 +66,10 @@ function Index(props) {
      return (
         <div>
     <Modal 
-        aria-labelledby="simple-modal-title"
-        aria-describedby="simple-modal-description"
+         aria-labelledby="Nucleome Browser Entries"
+         aria-describedby="Nucleome"
         open={open}
         onClose={handleClose}
-        style={{alignItems:'center',justifyContent:'center'}}
     >
         <div className={classes.modal} style={modalStyle}>
 
@@ -75,7 +90,6 @@ function Index(props) {
         </Box>
         <hr/>
         <Typography type="p" style={{textAlign:"center"}}>
-            A Multi Modality Genome Data Browser
         </Typography>
       </Box>
     </Container>
@@ -94,9 +108,11 @@ function Index(props) {
       </Grid>
       </div>
       <footer className={classes.footer}>
+        {version !== null ?
         <Typography variant="subtitle1" align="center" color="textSecondary" component="p">
             client version: {version} 
         </Typography>
+        : null}
         <Typography variant="subtitle1" align="center" gutterBottom>
         4D Nucleome and Carnegie Mellon University
         <CardMedia

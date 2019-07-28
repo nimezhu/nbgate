@@ -17,7 +17,6 @@ class PanelSpace extends React.Component {
         var _r = function (el) {
             el.each(function (d) {
                 var el0 = d3.select(this)
-                console.log(d)
                 var h = el0.append("div").classed("panel-heading", true)
                 var title = h.append("h3").classed("panel-title", true).html(d)
                 var btnGrp = title.append("span").style("float", "right").style("padding-right", "0px")
@@ -78,7 +77,6 @@ class PanelSpace extends React.Component {
     }
     render() {
         return (<div>
-            rendering
         </div>)
     }
 }
