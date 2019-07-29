@@ -4,6 +4,7 @@ import {
 } from 'react-router-dom';
 import Home from './pages/Home';
 import Space from './pages/Space';
+import Local from './pages/Local';
 
 import {
     withRouter
@@ -169,6 +170,7 @@ const initVersion = () => {
             {[
               {label:"Home",id:'about',icon:<HomeIcon />},
               {label:"Panel Space",id:'space', icon:<BookIcon />},
+              {label:"Local Session",id:'local', icon:<BookIcon />},
               ].map((d, index) => (
               <ListItem button key={d.id} onClick={handleLink(d.id)}>
                 <ListItemIcon>{d.icon}</ListItemIcon>
@@ -212,6 +214,7 @@ const initVersion = () => {
     <IconButton color="inherit" aria-label="GitHub Home" onClick={openGitHub}>
         <FaGithub/>        
     </IconButton>
+    <div hidden={true}>
     <IconButton color="inherit" aria-label="More Options" onClick={handleAnchor}>
         <MoreVertIcon />
      </IconButton>
@@ -219,6 +222,7 @@ const initVersion = () => {
           <MenuItem onClick={handleClose}>Profile</MenuItem>
           <MenuItem onClick={handleClose}>Logout</MenuItem>
         </Menu>
+    </div>
       </section> 
         </Toolbar>
       </AppBar>
@@ -250,6 +254,7 @@ const initVersion = () => {
           <Route path='/entry/about'  component={() => <Home version={version}/>}/>
           <Route exact path='/entry/' component={() => <Home version={version}/>}/>
           <Route exact path='/entry/space' component={() => <Space version={version}/>}/>
+          <Route exact path='/entry/local' component={() => <Local version={version}/>}/>
         </Switch>
         </main>
     </div>

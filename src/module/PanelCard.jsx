@@ -25,7 +25,6 @@ function PanelCard(props) {
     useEffect(function() {
         db.getItem(id).then(function(d0) {
             var d = JSON.parse(d0)
-            console.log(d)
             var svg = d3.select(svgRef.current)
             if (d.render in PanelIcons) { //TODO Remove S
                 var r = PanelIcons[d.render]().width(270)
