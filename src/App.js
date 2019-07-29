@@ -97,7 +97,7 @@ function ResponsiveDrawer(props) {
       window.open("https://github.com/nucleome")
     }
     function openDocs() {
-      window.open("http://doc.nucleome.org/classic")
+      window.open("https://nucleome-browser.readthedocs.io")
     }
     function handleDrawerToggle() {
         setMobileOpen(!mobileOpen);

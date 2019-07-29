@@ -6,9 +6,14 @@ import {
 import styles from "../styles"
 
 import PanelIcons from "../panel/icons"
+
+import PanelCard from "../module/PanelCard"
 import localforage from "localforage"
 import * as d3 from "d3"
-
+import {
+    useEffect
+} from "react";
+/*
 class PanelSpace extends React.Component {
     componentDidMount() {
         var nbPanel = localforage.createInstance({
@@ -72,6 +77,7 @@ class PanelSpace extends React.Component {
                     .merge(a)
                     .call(_r)
                 a.exit().remove()
+                //TODO 
             }
         })
     }
@@ -80,17 +86,39 @@ class PanelSpace extends React.Component {
         </div>)
     }
 }
+*/
+
+function PanelSpace(props) {
+    const [panels, setPanels] = React.useState([]);
+    const [db, setDb] = React.useState(null);
+    useEffect(() => {
+        var nbPanel = localforage.createInstance({
+            "name": "nbPanel"
+        })
+        setDb(nbPanel)
+        nbPanel.keys().then(function(d) {
+            if (d.length == 0) {
+                console.log(0)
+            } else {
+                console.log(d,panels)
+                setPanels(d)
+            }
+        })
+    }, [])
+    return (<div>
+        {panels.map(function(o,i){return <PanelCard db={db} id={o}/>})}
+    </div>)
+}
 
 function Index(props) {
     const {
         classes,
         version
     } = props
-    return ( <div>
+    return (<div>
         <div> {version} </div> 
         <PanelSpace classes={classes}/>
-        </div>
-    );
+        </div>);
 }
 
 const Space = withStyles(styles)(Index);
