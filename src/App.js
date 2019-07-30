@@ -4,7 +4,7 @@ import {
 } from 'react-router-dom';
 import Home from './pages/Home';
 import Space from './pages/Space';
-import Local from './pages/Local';
+import Session from './pages/Session';
 
 import {
     withRouter
@@ -29,7 +29,8 @@ import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 
 import HomeIcon from '@material-ui/icons/Home';
-import WebIcon from '@material-ui/icons/Web';
+import ViewCompactIcon from '@material-ui/icons/ViewCompact';
+import ViewComfyIcon from '@material-ui/icons/ViewComfy';
 import MenuIcon from '@material-ui/icons/Menu';
 import BookIcon from '@material-ui/icons/Book';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
@@ -168,9 +169,9 @@ const initVersion = () => {
       <Divider />
         <List>
             {[
-              {label:"Home",id:'about',icon:<HomeIcon />},
-              {label:"Panel Space",id:'space', icon:<BookIcon />},
-              {label:"Local Session",id:'local', icon:<BookIcon />},
+              {label:"Home",id:'home',icon:<HomeIcon />},
+              {label:"Panel Space",id:'space', icon:<ViewComfyIcon />},
+              {label:"Session Space",id:'session', icon:<ViewCompactIcon />},
               ].map((d, index) => (
               <ListItem button key={d.id} onClick={handleLink(d.id)}>
                 <ListItemIcon>{d.icon}</ListItemIcon>
@@ -251,10 +252,10 @@ const initVersion = () => {
         
         </div>
           <Switch>
-          <Route path='/entry/about'  component={() => <Home version={version}/>}/>
+          <Route path='/entry/home'  component={() => <Home version={version}/>}/>
           <Route exact path='/entry/' component={() => <Home version={version}/>}/>
           <Route exact path='/entry/space' component={() => <Space version={version}/>}/>
-          <Route exact path='/entry/local' component={() => <Local version={version}/>}/>
+          <Route exact path='/entry/session' component={() => <Session version={version}/>}/>
         </Switch>
         </main>
     </div>

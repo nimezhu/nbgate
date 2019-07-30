@@ -8,54 +8,31 @@ import NbIcon from "../module/NbIcon";
 import NbBanner from "../module/NbBanner";
 import EntryDiv from "../module/Entry";
 import CardMedia from '@material-ui/core/CardMedia';
+import Tooltip from '@material-ui/core/Tooltip';
 
-import Modal from '@material-ui/core/Modal';
 
 import {
     withStyles
 } from "@material-ui/styles";
 import styles from "../styles";
 import classNames from "classnames";
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
 
-/*
-function getModalStyle() {
-    const top = 50;
-    const left = 50;
-    return {
-      top: `${top}%`,
-      //margin:'auto',
-      display: 'flex !important',
-      alignItems: 'center',
-      left: `${left}%`
-    };
-  }
-*/
-function rand() {
-  return Math.round(Math.random() * 20) - 10;
-}
-
-function getModalStyle() {
-  const top = 45 + rand();
-  const left = 45 + rand();
-
-  return {
-    top: `${top}%`,
-    left: `${left}%`,
-    transform: `translate(-${top}%, -${left}%)`,
-  };
-}
 function handleClick() {
     window.open("/v1/main.html")
 }
 
 
 function Index(props) {
-    const {
+  const {
         classes,
         version
     } = props
-     const [open, setOpen] = React.useState(false);
-     const [modalStyle] = React.useState(getModalStyle);
+  const [open, setOpen] = React.useState(false);
   const handleOpen = () => {
     setOpen(true);
   };
@@ -63,22 +40,49 @@ function Index(props) {
   const handleClose = () => {
     setOpen(false);
   };
+  const hubsClick = () => {
+    var location = "/v1/main.html?initedLayout=hubs"
+    window.location.href = location
+}
+
      return (
         <div>
-    <Modal 
+    <Dialog
          aria-labelledby="Nucleome Browser Entries"
          aria-describedby="Nucleome"
         open={open}
         onClose={handleClose}
     >
-        <div className={classes.modal} style={modalStyle}>
-
+        <div>
+        <DialogTitle id="alert-dialog-title">{"Start Exploring Nucleome"}</DialogTitle>
+          <DialogContent>
+            <DialogContentText id="alert-dialog-description">
+              Quick Start
+            </DialogContentText>
+                <Tooltip title="Genome Browser" aria-label="Genome Browser">
+                        <Button color="secondary" variant="contained"onClick={hubsClick} className={classes.button}>
+                            Genome Browser 
+                        </Button>
+                </Tooltip>
+          </DialogContent>
+           <DialogContent>
+            <DialogContentText id="alert-dialog-description">
+              Start with a Public Session
+            </DialogContentText>
+            <EntryDiv classes={classes}/>
+          </DialogContent>
+           <DialogContent>
+            <DialogContentText id="alert-dialog-description">
+              Continue with a Local Session
+            </DialogContentText>
+              TODO
+          </DialogContent>
+          
         <Typography type="div">
          
         </Typography>
-        <EntryDiv classes={classes}/>
         </div>
-    </Modal>
+    </Dialog>
     <Container maxWidth="lg">
       <Box>
        <NbIcon scale="0.3"/>

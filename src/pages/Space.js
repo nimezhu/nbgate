@@ -14,6 +14,8 @@ import {
     useEffect
 } from "react";
 
+import Box from '@material-ui/core/Box';
+
 function PanelSpace(props) {
     const [panels, setPanels] = React.useState([]);
     const [db, setDb] = React.useState(null);
@@ -29,9 +31,12 @@ function PanelSpace(props) {
             }
         })
     }, [])
-    return (<div>
+    return (<Box
+        display="flex"
+        flexWrap="wrap" 
+        >
         {panels.map(function(o,i){return <PanelCard db={db} id={o}/>})}
-    </div>)
+    </Box>)
 }
 
 function Index(props) {

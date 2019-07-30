@@ -57,20 +57,6 @@ class EntryDiv extends React.Component {
             d
         } = this.state
         return (<div>
-                        <div className={classes.row}>
-                        <Typography component="h5" variant="h6" color="textPrimary" gutterBottom>
-                        </Typography>
-                  
-                           <Tooltip title="Genome Browser" aria-label="Genome Browser">
-                        <Button color="secondary" variant="contained"onClick={this.hubsClick} className={classes.button}>
-                            Genome Browser 
-                        </Button>
-                           </Tooltip>
-                        </div>
-                   <hr/>
-                    <div>
-                  <Typography component="h5" variant="h6" color="textPrimary" gutterBottom>
-                    </Typography>
                         <div>
                         { d.length && d.map((d) => 
                             <Tooltip title={d.note} aria-label={d.note}>
@@ -78,8 +64,7 @@ class EntryDiv extends React.Component {
                             </Tooltip>
                         ) }
                         </div>
-                        </div>
-                  </div>)
+              </div>)
     }
 }
 

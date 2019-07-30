@@ -206,8 +206,8 @@ export default function() {
         "component": component
     }
 
-    var xscale = 1.34
-    var yscale = 0.8
+    var xscale = 2.68
+    var yscale = 1.6
     var chart = function(selection) {
         selection.each(function(d) {
             console.log("D layout?",d)
