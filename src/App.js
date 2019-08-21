@@ -46,8 +46,20 @@ import { FaGithub } from 'react-icons/fa';
 const drawerWidth = 240;
 
 const useStyles = makeStyles(theme => ({
-    root: {
-    },
+     root: {
+    display: 'flex',
+    flexDirection: 'column',
+    minHeight: '100vh',
+  },
+  main: {
+    marginTop: theme.spacing(8),
+    marginBottom: theme.spacing(2),
+  }, 
+  footer: {
+    padding: theme.spacing(2),
+    marginTop: 'auto',
+    backgroundColor: 'white',
+  }, 
     drawer: {
             width: drawerWidth,
     },
@@ -88,7 +100,7 @@ function ResponsiveDrawer(props) {
     const [version,setVersion] = React.useState(null)
     const [mobileOpen, setMobileOpen] = React.useState(false);
     var a = window.location.href.split('/')
-    const [nav, setNav] = React.useState(a[5] || "about");
+    const [nav, setNav] = React.useState(a[5] || "home");
 
     const [anchorEl, setAnchorEl] = React.useState(null);
 
@@ -258,6 +270,19 @@ const initVersion = () => {
           <Route exact path='/entry/session' component={() => <Session version={version}/>}/>
         </Switch>
         </main>
+        <footer className={classes.footer}>
+        {version !== null ?
+        <Typography variant="subtitle1" align="center" color="textSecondary" component="p">
+            client version: {version} 
+        </Typography>
+        : null}
+        <Typography variant="subtitle1" align="center" gutterBottom>
+              <img style={{height:63}} src="/entry/images/cmu_logo.jpg"/>
+              <img style={{height:63}} src="/entry/images/4dn-logo_1.png"/>
+              <img style={{height:63}} src="/entry/images/omero6.png"/>
+        </Typography>
+
+      </footer>
     </div>
     );
 }

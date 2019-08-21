@@ -28,7 +28,7 @@ class EntryDiv extends React.Component {
             self.setState({
                 "d": t
             })
-        })
+            })
 
 
     }

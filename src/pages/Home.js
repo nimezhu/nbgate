@@ -3,10 +3,12 @@ import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
+import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
 import NbIcon from "../module/NbIcon";
 import NbBanner from "../module/NbBanner";
 import EntryDiv from "../module/Entry";
+import LocalEntryDiv from "../module/LocalEntry";
 import CardMedia from '@material-ui/core/CardMedia';
 import Tooltip from '@material-ui/core/Tooltip';
 
@@ -22,9 +24,6 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 
-function handleClick() {
-    window.open("/v1/main.html")
-}
 
 
 function Index(props) {
@@ -44,7 +43,10 @@ function Index(props) {
     var location = "/v1/main.html?initedLayout=hubs"
     window.location.href = location
 }
-
+  const continueClick = () => {
+    var location = "/v1/main.html?config=continue"
+    window.location.href = location
+}
      return (
         <div>
     <Dialog
@@ -73,17 +75,28 @@ function Index(props) {
           </DialogContent>
            <DialogContent>
             <DialogContentText id="alert-dialog-description">
-              Continue with a Local Session
+              Start with a Local Session
             </DialogContentText>
-              TODO
+              <LocalEntryDiv classes={classes}/>
+          </DialogContent>
+           <DialogContent>
+            <DialogContentText id="alert-dialog-description">
+              Continue with recently closed session 
+            </DialogContentText>
+          <Button variant="contained" onClick={continueClick} className={classes.button}>
+                             Continue
+              </Button>
+
           </DialogContent>
           
+
         <Typography type="div">
          
         </Typography>
         </div>
     </Dialog>
     <Container maxWidth="lg">
+
       <Box>
        <NbIcon scale="0.3"/>
       </Box>
@@ -92,7 +105,6 @@ function Index(props) {
         <Box style={{textAlign:"center"}}>
         <Button variant="outlined" title="Open Web Application" color="secondary" size="large" onClick={handleOpen}>Start</Button>
         </Box>
-        <hr/>
         <Typography type="p" style={{textAlign:"center"}}>
         </Typography>
       </Box>
@@ -111,21 +123,9 @@ function Index(props) {
 
       </Grid>
       </div>
-      <footer className={classes.footer}>
-        {version !== null ?
-        <Typography variant="subtitle1" align="center" color="textSecondary" component="p">
-            client version: {version} 
-        </Typography>
-        : null}
-        <Typography variant="subtitle1" align="center" gutterBottom>
-        4D Nucleome and Carnegie Mellon University
-        <CardMedia
-            image="./images/cmu_logo.jpg"
-        />
-        </Typography>
-
-      </footer>
+      
     </Container>
+
     </div>
     );
 }

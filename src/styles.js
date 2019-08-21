@@ -87,7 +87,24 @@ const styles = theme => ({
     toolbarButtons: {
         marginLeft: 'auto',
         marginRight: -12,
-    }
+    },
+    root: {
+    display: 'flex',
+    flexDirection: 'column',
+    minHeight: '100vh',
+  },
+  main: {
+    marginTop: theme.spacing(8),
+    marginBottom: theme.spacing(2),
+  },
+  footer: {
+    padding: theme.spacing(2),
+    marginTop: 'auto',
+    backgroundColor: 'white',
+  },
+  chip: {
+    margin: theme.spacing(0.5),
+  },
 
 });
 
