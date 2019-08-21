@@ -36,6 +36,7 @@ import BookIcon from '@material-ui/icons/Book';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 
 import Toolbar from '@material-ui/core/Toolbar';
+import Tooltip from '@material-ui/core/Tooltip';
 import Typography from '@material-ui/core/Typography';
 import {
     makeStyles,
@@ -215,7 +216,8 @@ const initVersion = () => {
         {nav}
             </Typography>
       <section className={classes.toolbarButtons}>     
-      <IconButton
+    <Tooltip title="Documentation">  
+    <IconButton
             color="inherit"
             aria-label="Docs"
             edge="start"
@@ -224,9 +226,12 @@ const initVersion = () => {
             >
              <BookIcon/>
             </IconButton>
+    </Tooltip>
+    <Tooltip title="Source Codes">
     <IconButton color="inherit" aria-label="GitHub Home" onClick={openGitHub}>
         <FaGithub/>        
     </IconButton>
+    </Tooltip>
     <div hidden={true}>
     <IconButton color="inherit" aria-label="More Options" onClick={handleAnchor}>
         <MoreVertIcon />
@@ -271,15 +276,13 @@ const initVersion = () => {
         </Switch>
         </main>
         <footer className={classes.footer}>
-        {version !== null ?
-        <Typography variant="subtitle1" align="center" color="textSecondary" component="p">
-            client version: {version} 
-        </Typography>
-        : null}
         <Typography variant="subtitle1" align="center" gutterBottom>
               <img style={{height:63}} src="/entry/images/cmu_logo.jpg"/>
               <img style={{height:63}} src="/entry/images/4dn-logo_1.png"/>
               <img style={{height:63}} src="/entry/images/omero6.png"/>
+        </Typography>
+        <Typography variant="subtitle1" align="center" gutterBottom>
+              2019 © <a href="https://www.cs.cmu.edu/~jianma/" target="_blank">Ma Lab</a> @ CMU
         </Typography>
 
       </footer>
