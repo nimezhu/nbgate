@@ -1,4 +1,6 @@
-import React from 'react';
+import React, {
+    useEffect
+} from "react"
 import ReactDOM from 'react-dom';
 import {
     withStyles
@@ -7,18 +9,37 @@ import styles from "../styles"
 
 
 import Box from '@material-ui/core/Box';
+import Typography from '@material-ui/core/Typography';
+import AppCard from "../module/AppCard"
 
-function Portal(props) {
-}
 
 function Index(props) {
     const {
         classes,
         version
     } = props
+    const [apps, setApps] = React.useState([]);
+    useEffect(() => {
+        fetch("/static/apps/apps.json").then(
+            function(d){
+                console.log(d)
+                return d.json()
+            }
+        ).then(d => {
+            setApps(d)
+        }
+        )
+    }, [])
     return (<div>
-        Coming soon...
-        Various Web Pages that can be interactively browsed with Nucleome Browser
+    <Typography>
+        Web Apps works with Nucleome Browser
+    </Typography>
+    <Box
+        display="flex"
+        flexWrap="wrap" 
+        >
+        {apps.map(function(o,i){return <AppCard data={o}/>})}
+    </Box>
         </div>);
 }
 
