@@ -33,6 +33,7 @@ import ViewCompactIcon from '@material-ui/icons/ViewCompact';
 import ViewComfyIcon from '@material-ui/icons/ViewComfy';
 import MenuIcon from '@material-ui/icons/Menu';
 import BookIcon from '@material-ui/icons/Book';
+import PlayIcon from '@material-ui/icons/PlayArrow';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 
 import Toolbar from '@material-ui/core/Toolbar';
@@ -119,6 +120,16 @@ function ResponsiveDrawer(props) {
     }
 
     function handleLink(d) {
+        if (d=="browser") {
+            return function handle() {
+                var k = localStorage.getItem("_cnb_")
+                if (k==null) {
+                    window.location.href = "/v1/main.html?initedLayout=hubs"
+                } else {
+                    window.location.href = "/v1/main.html?config=continue"
+                }
+            }
+        }
         return function handle() {
             setNav(d)
             props.history.push("./" + d)
@@ -185,6 +196,7 @@ const initVersion = () => {
               {label:"Home",id:'home',icon:<HomeIcon />},
               {label:"Panel Space",id:'space', icon:<ViewComfyIcon />},
               {label:"Session Space",id:'session', icon:<ViewCompactIcon />},
+              {label:"Back to Browser",id:'browser', icon:<PlayIcon />},
               ].map((d, index) => (
               <ListItem button key={d.id} onClick={handleLink(d.id)}>
                 <ListItemIcon>{d.icon}</ListItemIcon>
