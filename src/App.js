@@ -5,6 +5,8 @@ import {
 import Home from './pages/Home';
 import Space from './pages/Space';
 import Session from './pages/Session';
+import Apps from './pages/Apps';
+import Portal from './pages/Portal';
 
 import {
     withRouter
@@ -30,10 +32,13 @@ import MenuItem from '@material-ui/core/MenuItem';
 
 import HomeIcon from '@material-ui/icons/Home';
 import ViewCompactIcon from '@material-ui/icons/ViewCompact';
+import DashboardIcon from '@material-ui/icons/Dashboard';
 import ViewComfyIcon from '@material-ui/icons/ViewComfy';
 import MenuIcon from '@material-ui/icons/Menu';
 import BookIcon from '@material-ui/icons/Book';
 import PlayIcon from '@material-ui/icons/PlayArrow';
+import AppsIcon from '@material-ui/icons/Apps';
+import CloudIcon from '@material-ui/icons/Cloud';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 
 import Toolbar from '@material-ui/core/Toolbar';
@@ -194,9 +199,9 @@ const initVersion = () => {
         <List>
             {[
               {label:"Home",id:'home',icon:<HomeIcon />},
-              {label:"Panel Space",id:'space', icon:<ViewComfyIcon />},
-              {label:"Session Space",id:'session', icon:<ViewCompactIcon />},
               {label:"Back to Browser",id:'browser', icon:<PlayIcon />},
+              {label:"Session Space",id:'session', icon:<ViewCompactIcon />},
+              {label:"Panel Space",id:'space', icon:<DashboardIcon />},
               ].map((d, index) => (
               <ListItem button key={d.id} onClick={handleLink(d.id)}>
                 <ListItemIcon>{d.icon}</ListItemIcon>
@@ -205,6 +210,19 @@ const initVersion = () => {
             ))}
           </List>
  
+      <Divider />
+        <List>
+            {[
+              {label:"Apps",id:'apps', icon:<AppsIcon />},
+              {label:"Data Portals",id:'portal', icon:<CloudIcon />},
+              ].map((d, index) => (
+              <ListItem button key={d.id} onClick={handleLink(d.id)}>
+                <ListItemIcon>{d.icon}</ListItemIcon>
+                <ListItemText primary={d.label} />
+             </ListItem>
+            ))}
+          </List>
+
       <Divider />
     </div>
     );
@@ -285,6 +303,8 @@ const initVersion = () => {
           <Route exact path='/entry/' component={() => <Home version={version}/>}/>
           <Route exact path='/entry/space' component={() => <Space version={version}/>}/>
           <Route exact path='/entry/session' component={() => <Session version={version}/>}/>
+          <Route exact path='/entry/apps' component={() => <Apps version={version}/>}/>
+          <Route exact path='/entry/portal' component={() => <Portal version={version}/>}/>
         </Switch>
         </main>
         <footer className={classes.footer}>
