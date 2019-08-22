@@ -22,7 +22,6 @@ function Index(props) {
     useEffect(() => {
         fetch("/static/apps/apps.json").then(
             function(d){
-                console.log(d)
                 return d.json()
             }
         ).then(d => {
