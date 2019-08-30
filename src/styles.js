@@ -105,6 +105,10 @@ const styles = theme => ({
   chip: {
     margin: theme.spacing(0.5),
   },
+  button: {
+    margin: theme.spacing(0.5),
+  },
+
 
 });
 

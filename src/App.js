@@ -5,8 +5,6 @@ import {
 import Home from './pages/Home';
 import Space from './pages/Space';
 import Session from './pages/Session';
-import Apps from './pages/Apps';
-import Portal from './pages/Portal';
 
 import {
     withRouter
@@ -33,12 +31,10 @@ import MenuItem from '@material-ui/core/MenuItem';
 import HomeIcon from '@material-ui/icons/Home';
 import ViewCompactIcon from '@material-ui/icons/ViewCompact';
 import DashboardIcon from '@material-ui/icons/Dashboard';
-import ViewComfyIcon from '@material-ui/icons/ViewComfy';
 import MenuIcon from '@material-ui/icons/Menu';
 import BookIcon from '@material-ui/icons/Book';
 import PlayIcon from '@material-ui/icons/PlayArrow';
 import AppsIcon from '@material-ui/icons/Apps';
-import CloudIcon from '@material-ui/icons/Cloud';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 
 import Toolbar from '@material-ui/core/Toolbar';
@@ -120,6 +116,10 @@ function ResponsiveDrawer(props) {
     function openDocs() {
       window.open("https://nucleome-browser.readthedocs.io")
     }
+    function openApps() {
+      alert("Under Construction. Coming Soon...")
+    }
+ 
     function handleDrawerToggle() {
         setMobileOpen(!mobileOpen);
     }
@@ -211,19 +211,7 @@ const initVersion = () => {
           </List>
  
       <Divider />
-        <List>
-            {[
-              {label:"Apps",id:'apps', icon:<AppsIcon />},
-              {label:"Data Portals",id:'portal', icon:<CloudIcon />},
-              ].map((d, index) => (
-              <ListItem button key={d.id} onClick={handleLink(d.id)}>
-                <ListItemIcon>{d.icon}</ListItemIcon>
-                <ListItemText primary={d.label} />
-             </ListItem>
-            ))}
-          </List>
 
-      <Divider />
     </div>
     );
 
@@ -245,32 +233,32 @@ const initVersion = () => {
           <Typography variant="h6" noWrap>
         {nav}
             </Typography>
-      <section className={classes.toolbarButtons}>     
+      <section className={classes.toolbarButtons}>  
+      <Tooltip title="Apps">  
+    <IconButton
+            color="inherit"
+            aria-label="Apps"
+            edge="start"
+            onClick={openApps}
+            >
+             <AppsIcon/>
+        </IconButton>
+    </Tooltip>
     <Tooltip title="Documentation">  
     <IconButton
             color="inherit"
             aria-label="Docs"
             edge="start"
             onClick={openDocs}
-
             >
              <BookIcon/>
             </IconButton>
     </Tooltip>
     <Tooltip title="Source Codes">
-    <IconButton color="inherit" aria-label="GitHub Home" onClick={openGitHub}>
+    <IconButton color="inherit" edge="start" aria-label="GitHub Home" onClick={openGitHub}>
         <FaGithub/>        
     </IconButton>
     </Tooltip>
-    <div hidden={true}>
-    <IconButton color="inherit" aria-label="More Options" onClick={handleAnchor}>
-        <MoreVertIcon />
-     </IconButton>
-          <Menu id="simple-menu" anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={handleClose}>
-          <MenuItem onClick={handleClose}>Profile</MenuItem>
-          <MenuItem onClick={handleClose}>Logout</MenuItem>
-        </Menu>
-    </div>
       </section> 
         </Toolbar>
       </AppBar>
@@ -303,8 +291,6 @@ const initVersion = () => {
           <Route exact path='/entry/' component={() => <Home version={version}/>}/>
           <Route exact path='/entry/space' component={() => <Space version={version}/>}/>
           <Route exact path='/entry/session' component={() => <Session version={version}/>}/>
-          <Route exact path='/entry/apps' component={() => <Apps version={version}/>}/>
-          <Route exact path='/entry/portal' component={() => <Portal version={version}/>}/>
         </Switch>
         </main>
         <footer className={classes.footer}>
