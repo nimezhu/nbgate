@@ -35,7 +35,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 import BookIcon from '@material-ui/icons/Book';
 import PlayIcon from '@material-ui/icons/PlayArrow';
 import AppsIcon from '@material-ui/icons/Apps';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
+import DynamicFeedIcon from '@material-ui/icons/ArtTrack';
 
 import Toolbar from '@material-ui/core/Toolbar';
 import Tooltip from '@material-ui/core/Tooltip';
@@ -117,7 +117,10 @@ function ResponsiveDrawer(props) {
       window.open("https://nucleome-browser.readthedocs.io")
     }
     function openApps() {
-      alert("Under Construction. Coming Soon...")
+      window.open("/static/store")
+    }
+    function openStories() {
+      window.open("/static/journal")
     }
  
     function handleDrawerToggle() {
@@ -244,6 +247,17 @@ const initVersion = () => {
              <AppsIcon/>
         </IconButton>
     </Tooltip>
+
+    <Tooltip title="Data Driven Pages">  
+    <IconButton
+            color="inherit"
+            aria-label="Stories"
+            edge="start"
+            onClick={openStories}
+            >
+             <DynamicFeedIcon/>
+        </IconButton>
+    </Tooltip>
     <Tooltip title="Documentation">  
     <IconButton
             color="inherit"
@@ -295,12 +309,11 @@ const initVersion = () => {
         </main>
         <footer className={classes.footer}>
         <Typography variant="subtitle1" align="center" gutterBottom>
-              <img style={{height:63}} src="/entry/images/cmu_logo.jpg"/>
-              <img style={{height:63}} src="/entry/images/4dn-logo_1.png"/>
-              <img style={{height:63}} src="/entry/images/omero6.png"/>
-        </Typography>
-        <Typography variant="subtitle1" align="center" gutterBottom>
               2019 © <a href="https://www.cs.cmu.edu/~jianma/" target="_blank">Ma Lab</a> @ CMU
+              <Typography align="right" type="span">
+              <img style={{top:10,height:33}} src="/entry/images/cmu_logo.jpg"/>
+              <img style={{top:10,height:33}} src="/entry/images/4dn-logo_1.png"/>
+              </Typography>
         </Typography>
 
       </footer>
