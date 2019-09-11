@@ -103,7 +103,7 @@ function Index(props) {
       <Box>
          <NbBanner classes={classes}/>
         <Box style={{textAlign:"center"}}>
-        <Button variant="outlined" title="Open Web Application" color="secondary" size="large" onClick={handleOpen}>Start</Button>
+        <Button variant="outlined" title="Open Browser" color="secondary" size="large" onClick={handleOpen}>Start</Button>
         </Box>
         <Typography type="p" style={{textAlign:"center"}}>
         </Typography>
@@ -124,6 +124,9 @@ function Index(props) {
       </Grid>
       </div>
       
+    </Container>
+    <Container>
+
     </Container>
 
     </div>

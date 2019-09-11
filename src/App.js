@@ -5,11 +5,11 @@ import {
 import Home from './pages/Home';
 import Space from './pages/Space';
 import Session from './pages/Session';
+import Portal from "./pages/Portal";
 
 import {
     withRouter
 } from 'react-router-dom'
-
 
 
 import React from 'react';
@@ -24,13 +24,10 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-
-import Menu from '@material-ui/core/Menu';
-import MenuItem from '@material-ui/core/MenuItem';
-
 import HomeIcon from '@material-ui/icons/Home';
 import ViewCompactIcon from '@material-ui/icons/ViewCompact';
 import DashboardIcon from '@material-ui/icons/Dashboard';
+import DatabaseIcon from '@material-ui/icons/Cloud';
 import MenuIcon from '@material-ui/icons/Menu';
 import BookIcon from '@material-ui/icons/Book';
 import PlayIcon from '@material-ui/icons/PlayArrow';
@@ -45,6 +42,8 @@ import {
     useTheme
 } from '@material-ui/core/styles';
 import { FaGithub } from 'react-icons/fa';
+
+import AppFooter from "./AppFooter"
 
 const drawerWidth = 240;
 
@@ -68,6 +67,7 @@ const useStyles = makeStyles(theme => ({
     },
     appBar: {
         width: "100%",
+        background: "rgba(0,0,0,0.618)",
     },
     menuButton: {
         marginRight: theme.spacing(2),
@@ -205,6 +205,7 @@ const initVersion = () => {
               {label:"Back to Browser",id:'browser', icon:<PlayIcon />},
               {label:"Session Space",id:'session', icon:<ViewCompactIcon />},
               {label:"Panel Space",id:'space', icon:<DashboardIcon />},
+              {label:"Data Portal",id:'portal', icon:<DatabaseIcon />},
               ].map((d, index) => (
               <ListItem button key={d.id} onClick={handleLink(d.id)}>
                 <ListItemIcon>{d.icon}</ListItemIcon>
@@ -222,7 +223,7 @@ const initVersion = () => {
     return (
         <div className={classes.root}>
       <CssBaseline />
-      <AppBar position="fixed" className={classes.appBar}>
+      <AppBar position="fixed" className={classes.appBar} >
         <Toolbar>
           <IconButton
             color="inherit"
@@ -305,18 +306,10 @@ const initVersion = () => {
           <Route exact path='/entry/' component={() => <Home version={version}/>}/>
           <Route exact path='/entry/space' component={() => <Space version={version}/>}/>
           <Route exact path='/entry/session' component={() => <Session version={version}/>}/>
+          <Route exact path='/entry/portal' component={() => <Portal version={version}/>}/>
         </Switch>
         </main>
-        <footer className={classes.footer}>
-        <Typography variant="subtitle1" align="center" gutterBottom>
-              2019 © <a href="https://www.cs.cmu.edu/~jianma/" target="_blank">Ma Lab</a> @ CMU
-              <Typography align="right" type="span">
-              <img style={{top:10,height:33}} src="/entry/images/cmu_logo.jpg"/>
-              <img style={{top:10,height:33}} src="/entry/images/4dn-logo_1.png"/>
-              </Typography>
-        </Typography>
-
-      </footer>
+       <AppFooter classes = {classes}/> 
     </div>
     );
 }
