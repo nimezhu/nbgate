@@ -14,6 +14,9 @@ import 'react-dropdown-tree-select/dist/styles.css'
 
 import nbAgent from "../tools/nbAgent"
 
+import nucle3d from "../module/nucle3d"
+import * as d3 from "d3"
+
 
 
 const sheetid = "1pEgBTlA1sv3QSEkSL76XP27WXRTZpqhgeXqMzI-Mau0"
@@ -95,10 +98,16 @@ function Index(props) {
         //var ctx = node.getContext('2d')
         //ctx.fillText("Hello World",40,40)
     }
+    
     useEffect(() => {
         var agent = gsheetAgent().title("Index").sheetid(sheetid)
         agent().then(renderData).catch(console.log) //TODO 
         //TODO
+        var url = "/static/data/K562.100k.nucle3d"
+        var chart = nucle3d().uri(url).width(500).height(500)
+        var el = d3.select(myRef.current)
+        console.log(el)
+        el.call(chart)
         /*
         fetch("http://vis.nucleome.org/d/portal/hg38/hg38_Dilution_Hi-C.hic/ls?attr=1",{}).then(function(d){
             return d.json()
@@ -128,6 +137,8 @@ function Index(props) {
     };
 
     return (<div>
+        <div ref={myRef}>
+        </div>
         <div>
             Functions
         <ul>
@@ -139,6 +150,7 @@ function Index(props) {
                         <Bar type="monotone" dataKey="Count" barSize={30} fill="#8884d8" />
                     </BarChart>
                 </li>
+                
                 <li>
                     Easy Select Data Set from 4DNucleome and Create A Panel to Panel Space.
                     (Genome -> Sheet or Search)

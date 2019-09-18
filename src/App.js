@@ -12,7 +12,7 @@ import {
 } from 'react-router-dom'
 
 
-import React from 'react';
+import React, {useRef} from 'react';
 import PropTypes from 'prop-types';
 import AppBar from '@material-ui/core/AppBar';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -35,6 +35,7 @@ import AppsIcon from '@material-ui/icons/Apps';
 import DynamicFeedIcon from '@material-ui/icons/ArtTrack';
 
 import Toolbar from '@material-ui/core/Toolbar';
+import Button from '@material-ui/core/Button';
 import Tooltip from '@material-ui/core/Tooltip';
 import Typography from '@material-ui/core/Typography';
 import {
@@ -44,6 +45,7 @@ import {
 import { FaGithub } from 'react-icons/fa';
 
 import AppFooter from "./AppFooter"
+import { useEffect } from 'react';
 
 const drawerWidth = 240;
 
@@ -106,6 +108,8 @@ function ResponsiveDrawer(props) {
     const [nav, setNav] = React.useState(a[5] || "home");
 
     const [anchorEl, setAnchorEl] = React.useState(null);
+    var notifyRef = useRef(null)
+    var reloadRef = useRef(null)
 
     function handleAnchor(event) {
     setAnchorEl(anchorEl ? null : event.currentTarget);
@@ -161,22 +165,55 @@ function ResponsiveDrawer(props) {
             console.log("No Service Worker");
         }
     }
+         
+
 }
 const initVersion = () => {
    if (!swInited) {
+    
     if (navigator.serviceWorker) {
     console.log("ServiceWorkersSupported");
+    var newWorker
+
+    //Change it Notification Bar
+    reloadRef.current.addEventListener('click', function() {
+        newWorker.postMessage({
+            action: 'skipWaiting'
+        });
+    });
     navigator.serviceWorker.register('/sw.js', {
             scope: '/'
         })
         .then(function(reg) {
             console.log("ServiceWorkerstered", reg);
+            reg.addEventListener('updatefound', () => {
+                newWorker = reg.installing;
+                newWorker.addEventListener('statechange', () => {
+                    switch (newWorker.state) {
+                        case 'installed':
+                            if (navigator.serviceWorker.controller) {
+                                //show notification
+                                //let notification = document.getElementById('notify');
+                                //notification.style.display = null;
+                                notifyRef.current.style.display = null
+                            }
+                            break;
+                    }
+                });
+            }) 
             setSwInited(true)
             getVersion()
         })
         .catch(function(error) {
             console.log("Failedegister ServiceWorker", error);
          });
+
+    let refreshing;
+        navigator.serviceWorker.addEventListener('controllerchange', function() {
+            if (refreshing) return;
+            window.location.reload();
+            refreshing = true;
+        });
    } else {
      console.log("Service Worker Not Supported")
      setSwInited(true)
@@ -218,8 +255,9 @@ const initVersion = () => {
 
     </div>
     );
-
+useEffect(function(){
     initVersion()
+})
     return (
         <div className={classes.root}>
       <CssBaseline />
@@ -300,6 +338,9 @@ const initVersion = () => {
       <main className={classes.content}>
         <div className={classes.toolbar}>
         
+        </div>
+        <div className={classes.notification} ref={notifyRef} style={{display:"none",fontSize:"18px",height:"30px"}}>
+            A new version of this app is available. Please Click <Button various="outlined" ref={reloadRef}>Update</Button> to update.
         </div>
           <Switch>
           <Route path='/entry/home'  component={() => <Home version={version}/>}/>
