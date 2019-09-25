@@ -24,6 +24,8 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 
+import queryString from 'query-string'
+
 
 
 function Index(props) {
@@ -46,7 +48,11 @@ function Index(props) {
   const continueClick = () => {
     var location = "/v1/main.html?config=continue"
     window.location.href = location
-}
+ }
+ let params = queryString.parse(window.location.search)
+ let sheetid = params["sheetid"] || null
+ let title = params["title"] || "Publish"
+
      return (
         <div>
     <Dialog
@@ -71,7 +77,7 @@ function Index(props) {
             <DialogContentText id="alert-dialog-description">
               Start with a Public Session
             </DialogContentText>
-            <EntryDiv classes={classes}/>
+            <EntryDiv classes={classes} sheetid={sheetid} title={title}/>
           </DialogContent>
            <DialogContent>
             <DialogContentText id="alert-dialog-description">

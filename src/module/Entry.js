@@ -3,18 +3,22 @@ import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import Tooltip from '@material-ui/core/Tooltip';
 import Chip from '@material-ui/core/Chip';
+
+//TODO Set Sheet ID , How TO Set Sheet ID???
 class EntryDiv extends React.Component {
     handleClick() {
         console.log("TODO")
     }
     constructor(props) {
         super(props);
+        var sheetId = props.sheetid || "1N_viSL6hDY_n75dVP4bfiLJ99SOPzIfqrka1JvJjv4E"
+        var title = props.title || "Publish"
+        
         var self = this;
         this.state = {
             "d": []
         }
-        var sheetId = "1N_viSL6hDY_n75dVP4bfiLJ99SOPzIfqrka1JvJjv4E"
-        var title = "Publish"
+        this.sheetid = sheetId
         var apiKey = "AIzaSyBhECk4C1LpxI1mDJjSTwot-hRP2v3bwEA"
         fetch("https://sheets.googleapis.com/v4/spreadsheets/" +
             sheetId + "/values/" + title + "!A:C?key=" + apiKey).then(function(d){return d.json()}).then(function(d) {
@@ -28,14 +32,14 @@ class EntryDiv extends React.Component {
             self.setState({
                 "d": t
             })
-            })
+         }).catch(function(e){
+         })
 
 
     }
-    handleClick(d) {
+    handleClick(d,sheetid) {
         return function() {
-            var sheetId = "1N_viSL6hDY_n75dVP4bfiLJ99SOPzIfqrka1JvJjv4E"
-            var location = "/v1/main.html?config=gsheet:" + sheetId + ":" + d.label.replace(" ", "%20")
+            var location = "/v1/main.html?config=gsheet:" + sheetid + ":" + d.label.replace(" ", "%20")
             window.location.href = location
         }
     }
@@ -56,11 +60,13 @@ class EntryDiv extends React.Component {
         const {
             d
         } = this.state
+        var sheetid = this.sheetid
         return (<div>
                         <div>
-                        { d.length && d.map((d) => 
+                            
+                        { d.length == 0 ? "Loading.." : d.map((d) => 
                             <Tooltip title={d.note} aria-label={d.note}>
-                            <Chip className={classes.chip} label={d.label} onClick={this.handleClick(d)}/>
+                            <Chip className={classes.chip} label={d.label} onClick={this.handleClick(d,sheetid)}/> 
                             </Tooltip>
                         ) }
                         </div>

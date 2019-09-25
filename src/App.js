@@ -185,8 +185,11 @@ const initVersion = () => {
             scope: '/'
         })
         .then(function(reg) {
-            console.log("ServiceWorkerstered", reg);
-            reg.addEventListener('updatefound', () => {
+            if (reg.waiting && reg.active) {
+                newWorker = reg.waiting
+                notifyRef.current.style.display = null
+            } else {
+                reg.addEventListener('updatefound', () => {
                 newWorker = reg.installing;
                 newWorker.addEventListener('statechange', () => {
                     switch (newWorker.state) {
@@ -198,9 +201,10 @@ const initVersion = () => {
                                 notifyRef.current.style.display = null
                             }
                             break;
-                    }
-                });
-            }) 
+                        }
+                    });
+                })
+            }
             setSwInited(true)
             getVersion()
         })
@@ -287,7 +291,7 @@ useEffect(function(){
         </IconButton>
     </Tooltip>
 
-    <Tooltip title="Data Driven Pages">  
+    <Tooltip title="Customized Web Pages">  
     <IconButton
             color="inherit"
             aria-label="Stories"
@@ -307,7 +311,7 @@ useEffect(function(){
              <BookIcon/>
             </IconButton>
     </Tooltip>
-    <Tooltip title="Source Codes">
+    <Tooltip title="Source Code">
     <IconButton color="inherit" edge="start" aria-label="GitHub Home" onClick={openGitHub}>
         <FaGithub/>        
     </IconButton>
