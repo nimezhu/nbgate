@@ -246,7 +246,7 @@ const initVersion = () => {
               {label:"Back to Browser",id:'browser', icon:<PlayIcon />},
               {label:"Session Space",id:'session', icon:<ViewCompactIcon />},
               {label:"Panel Space",id:'space', icon:<DashboardIcon />},
-              {label:"Data Portal",id:'portal', icon:<DatabaseIcon />},
+              /*{label:"Data Portal",id:'portal', icon:<DatabaseIcon />},*/
               ].map((d, index) => (
               <ListItem button key={d.id} onClick={handleLink(d.id)}>
                 <ListItemIcon>{d.icon}</ListItemIcon>
@@ -351,7 +351,7 @@ useEffect(function(){
           <Route exact path='/entry/' component={() => <Home version={version}/>}/>
           <Route exact path='/entry/space' component={() => <Space version={version}/>}/>
           <Route exact path='/entry/session' component={() => <Session version={version}/>}/>
-          <Route exact path='/entry/portal' component={() => <Portal version={version}/>}/>
+         /* <Route exact path='/entry/portal' component={() => <Portal version={version}/>}/> */
         </Switch>
         </main>
        <AppFooter classes = {classes}/> 
