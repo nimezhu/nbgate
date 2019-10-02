@@ -42,7 +42,7 @@ import {
     makeStyles,
     useTheme
 } from '@material-ui/core/styles';
-import { FaGithub } from 'react-icons/fa';
+import { FaGithub,FaSlack } from 'react-icons/fa';
 
 import AppFooter from "./AppFooter"
 import { useEffect } from 'react';
@@ -125,6 +125,9 @@ function ResponsiveDrawer(props) {
     }
     function openStories() {
       window.open("/static/journal")
+    }
+    function openSlack() {
+      window.open("https://join.slack.com/t/nucleome-browser/shared_invite/enQtNzY3NzQzOTczODc0LTZmYmNhYmJmYWVjZWMzNDY4MTQ5NmNmZmVmZTJhMzgyNjQwMGFiMDQ4ZWMwOWRjYjkzZjVjYjNmY2FkNGYxNWM")
     }
  
     function handleDrawerToggle() {
@@ -311,6 +314,12 @@ useEffect(function(){
              <BookIcon/>
             </IconButton>
     </Tooltip>
+  <Tooltip title="Join Nucleome Browser Slack">
+    <IconButton color="inherit" edge="start" aria-label="Slack Home" onClick={openSlack}>
+        <FaSlack/>        
+    </IconButton>
+    </Tooltip>
+
     <Tooltip title="Source Code">
     <IconButton color="inherit" edge="start" aria-label="GitHub Home" onClick={openGitHub}>
         <FaGithub/>        
