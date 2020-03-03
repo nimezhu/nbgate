@@ -6,10 +6,13 @@ import Home from './pages/Home';
 import Space from './pages/Space';
 import Session from './pages/Session';
 import Portal from "./pages/Portal";
+import Gallery from "./pages/Gallery";
 
 import {
     withRouter
 } from 'react-router-dom'
+
+import getUrlParam from "./tools/getUrlParam"
 
 
 import React, {useRef} from 'react';
@@ -32,6 +35,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 import BookIcon from '@material-ui/icons/Book';
 import PlayIcon from '@material-ui/icons/PlayArrow';
 import AppsIcon from '@material-ui/icons/Apps';
+import GalleryIcon from '@material-ui/icons/PhotoLibrary';
 import DynamicFeedIcon from '@material-ui/icons/ArtTrack';
 
 import Toolbar from '@material-ui/core/Toolbar';
@@ -126,8 +130,12 @@ function ResponsiveDrawer(props) {
     function openStories() {
       window.open("/static/journal")
     }
-    function openSlack() {
+    function openSlack() { // Modal Join or Enter
       window.open("https://join.slack.com/t/nucleome-browser/shared_invite/enQtNzY3NzQzOTczODc0LTZmYmNhYmJmYWVjZWMzNDY4MTQ5NmNmZmVmZTJhMzgyNjQwMGFiMDQ4ZWMwOWRjYjkzZjVjYjNmY2FkNGYxNWM")
+    }
+    function openGallery() {
+        console.log("TODO 2 Gallery")
+        handleLink("gallery")()
     }
  
     function handleDrawerToggle() {
@@ -198,9 +206,6 @@ const initVersion = () => {
                     switch (newWorker.state) {
                         case 'installed':
                             if (navigator.serviceWorker.controller) {
-                                //show notification
-                                //let notification = document.getElementById('notify');
-                                //notification.style.display = null;
                                 notifyRef.current.style.display = null
                             }
                             break;
@@ -246,10 +251,10 @@ const initVersion = () => {
         <List>
             {[
               {label:"Home",id:'home',icon:<HomeIcon />},
-              {label:"Back to Browser",id:'browser', icon:<PlayIcon />},
+              {label:"Browser",id:'browser', icon:<PlayIcon />},
               {label:"Session Space",id:'session', icon:<ViewCompactIcon />},
               {label:"Panel Space",id:'space', icon:<DashboardIcon />},
-              /*{label:"Data Portal",id:'portal', icon:<DatabaseIcon />},*/
+              {label:"Gallery",id:'gallery', icon:<GalleryIcon />},
               ].map((d, index) => (
               <ListItem button key={d.id} onClick={handleLink(d.id)}>
                 <ListItemIcon>{d.icon}</ListItemIcon>
@@ -262,9 +267,14 @@ const initVersion = () => {
 
     </div>
     );
-useEffect(function(){
-    initVersion()
-})
+    useEffect(function(){
+        initVersion()
+        var page = getUrlParam("page")
+        if (page !== null) {
+           handleLink(page)()
+        }
+    },[])
+
     return (
         <div className={classes.root}>
       <CssBaseline />
@@ -283,6 +293,17 @@ useEffect(function(){
         {nav}
             </Typography>
       <section className={classes.toolbarButtons}>  
+   <Tooltip title="Gallery">  
+    <IconButton
+            color="inherit"
+            aria-label="Gallery"
+            edge="start"
+            onClick={openGallery}
+            >
+             <GalleryIcon/>
+        </IconButton>
+    </Tooltip>
+
       <Tooltip title="Apps">  
     <IconButton
             color="inherit"
@@ -360,6 +381,7 @@ useEffect(function(){
           <Route exact path='/entry/' component={() => <Home version={version}/>}/>
           <Route exact path='/entry/space' component={() => <Space version={version}/>}/>
           <Route exact path='/entry/session' component={() => <Session version={version}/>}/>
+          <Route exact path='/entry/gallery' component={() => <Gallery version={version}/>}/>
          /* <Route exact path='/entry/portal' component={() => <Portal version={version}/>}/> */
         </Switch>
         </main>

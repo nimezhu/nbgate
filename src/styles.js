@@ -54,6 +54,11 @@ const styles = theme => ({
     height: 0,
     paddingTop: '100.0%',
   },
+  gmedia: {
+    height: 0,
+    paddingTop: '56.0%',
+  },
+
   actions: {
     display: 'flex',
   },
@@ -108,6 +113,11 @@ const styles = theme => ({
   button: {
     margin: theme.spacing(0.5),
   },
+    gcard: {
+        width: 240,
+        height: 328,
+        margin: theme.spacing(1.5),
+    }
 
 
 });

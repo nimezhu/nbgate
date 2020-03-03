@@ -1,6 +1,6 @@
 {
   "name": "nbgate",
-  "version": "0.0.1",
+  "version": "0.6.12",
   "private": true,
   "homepage": "./",
   "dependencies": {
