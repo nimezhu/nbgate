@@ -55,8 +55,8 @@ function Index(props) {
         fetch("https://sheets.googleapis.com/v4/spreadsheets/" +
             sheetId + "/values/" + title + "!A:C?key=" + apiKey).then(function(d) {
             return d.json()
-        }).then(function(d) {
-
+        })
+        .then(function(d) {
             var t = d.values.map(function(d,i) {
                 return {
                     label: d[0],
@@ -80,7 +80,7 @@ function Index(props) {
         {data.map(function(d,i){
             return (<Card className={classes.gcard}>
                 <CardHeader
-                    title = {d.label}
+                    title = {d.label.replace(/_/g, " ")}
                 >
                 </CardHeader>
                  <CardMedia
@@ -88,7 +88,7 @@ function Index(props) {
         image={"/static/image/sessions/"+d.label+".png"}
         title={d.label}
       />
-                <CardContent>
+                <CardContent className={classes.gcardContent}>
                      <Typography variant="body2" color="textSecondary" component="p">
                     {d.note}
                      </Typography>
@@ -113,7 +113,7 @@ function Index(props) {
                     image={"/static/image/sessions/ORM.png"}
                     title="ORM"
             />
-                <CardContent>
+                <CardContent className={classes.gcardContent}>
                      <Typography variant="body2" color="textSecondary" component="p">
                     ORM data track.
                      </Typography>

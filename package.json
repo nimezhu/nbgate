@@ -32,6 +32,7 @@
     "recharts": "^1.7.1",
     "remarkable": "^1.7.1",
     "remarkable-react": "^1.4.1",
+    "showdown": "^1.9.1",
     "wordcloud": "^1.1.0"
   },
   "scripts": {

@@ -7,7 +7,10 @@ import Space from './pages/Space';
 import Session from './pages/Session';
 import Portal from "./pages/Portal";
 import Gallery from "./pages/Gallery";
+import Hints from "./pages/Hints";
+import Docs from "./pages/Docs";
 
+import Slack from "./module/slack"
 import {
     withRouter
 } from 'react-router-dom'
@@ -15,7 +18,7 @@ import {
 import getUrlParam from "./tools/getUrlParam"
 
 
-import React, {useRef} from 'react';
+import React, {useRef,useState} from 'react';
 import PropTypes from 'prop-types';
 import AppBar from '@material-ui/core/AppBar';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -36,7 +39,8 @@ import BookIcon from '@material-ui/icons/Book';
 import PlayIcon from '@material-ui/icons/PlayArrow';
 import AppsIcon from '@material-ui/icons/Apps';
 import GalleryIcon from '@material-ui/icons/PhotoLibrary';
-import DynamicFeedIcon from '@material-ui/icons/ArtTrack';
+import HintsIcon from '@material-ui/icons/Info';
+import DynamicFeedIcon from '@material-ui/icons/Pages';
 
 import Toolbar from '@material-ui/core/Toolbar';
 import Button from '@material-ui/core/Button';
@@ -134,10 +138,17 @@ function ResponsiveDrawer(props) {
       window.open("https://join.slack.com/t/nucleome-browser/shared_invite/enQtNzY3NzQzOTczODc0LTZmYmNhYmJmYWVjZWMzNDY4MTQ5NmNmZmVmZTJhMzgyNjQwMGFiMDQ4ZWMwOWRjYjkzZjVjYjNmY2FkNGYxNWM")
     }
     function openGallery() {
-        console.log("TODO 2 Gallery")
         handleLink("gallery")()
     }
+    function openHome() {
+        handleLink("home")()
+    }
+
+    function openHints() {
+        handleLink("hints")()
+    }
  
+
     function handleDrawerToggle() {
         setMobileOpen(!mobileOpen);
     }
@@ -153,12 +164,35 @@ function ResponsiveDrawer(props) {
                 }
             }
         }
-        return function handle() {
+        return function handle(rest) {
             setNav(d)
-            props.history.push("./" + d)
+            var u = "/entry/" + d //TODO 
+            if (arguments.length > 0) {
+                u =  u + "/__" + rest
+            }
+            props.history.push(u)
         }
 
     }
+    function handleNav(d) {
+        if (d=="browser") {
+            return function handle() {
+                var k = localStorage.getItem("_cnb_")
+                if (k==null) {
+                    window.location.href = "/v1/main.html?initedLayout=hubs"
+                } else {
+                    window.location.href = "/v1/main.html?config=continue"
+                }
+            }
+        }
+        return function handle() {
+            setNav(d)
+            var u = "/entry/" + d //TODO 
+            props.history.push(u)
+        }
+
+    }
+
     function handleClose() {
       setAnchorEl(null);
     }
@@ -255,8 +289,9 @@ const initVersion = () => {
               {label:"Session Space",id:'session', icon:<ViewCompactIcon />},
               {label:"Panel Space",id:'space', icon:<DashboardIcon />},
               {label:"Gallery",id:'gallery', icon:<GalleryIcon />},
+              {label:"Hints",id:'hints', icon:<HintsIcon />},
               ].map((d, index) => (
-              <ListItem button key={d.id} onClick={handleLink(d.id)}>
+              <ListItem button key={d.id} onClick={handleNav(d.id)}>
                 <ListItemIcon>{d.icon}</ListItemIcon>
                 <ListItemText primary={d.label} />
              </ListItem>
@@ -267,11 +302,20 @@ const initVersion = () => {
 
     </div>
     );
+    const [page,setPage] = useState("home")
+    const [rest,setRest] = useState()
     useEffect(function(){
         initVersion()
-        var page = getUrlParam("page")
+        var p = getUrlParam("page")
+        var r = getUrlParam("rest")
         if (page !== null) {
-           handleLink(page)()
+            setPage(p)
+            if (r!== null) {
+                setRest(r)
+                handleLink(p)(r)
+            } else {
+                handleLink(p)()
+            }
         }
     },[])
 
@@ -293,6 +337,18 @@ const initVersion = () => {
         {nav}
             </Typography>
       <section className={classes.toolbarButtons}>  
+
+    <Tooltip title="Home">  
+    <IconButton
+            color="inherit"
+            aria-label="Home"
+            edge="start"
+            onClick={openHome}
+            >
+             <HomeIcon/>
+        </IconButton>
+    </Tooltip>
+
    <Tooltip title="Gallery">  
     <IconButton
             color="inherit"
@@ -303,7 +359,16 @@ const initVersion = () => {
              <GalleryIcon/>
         </IconButton>
     </Tooltip>
-
+   <Tooltip title="Hints">  
+    <IconButton
+            color="inherit"
+            aria-label="Hints"
+            edge="start"
+            onClick={openHints}
+            >
+             <HintsIcon/>
+        </IconButton>
+    </Tooltip>
       <Tooltip title="Apps">  
     <IconButton
             color="inherit"
@@ -335,12 +400,11 @@ const initVersion = () => {
              <BookIcon/>
             </IconButton>
     </Tooltip>
-  <Tooltip title="Join Nucleome Browser Slack">
+  <Tooltip title="Slack">
     <IconButton color="inherit" edge="start" aria-label="Slack Home" onClick={openSlack}>
         <FaSlack/>        
     </IconButton>
     </Tooltip>
-
     <Tooltip title="Source Code">
     <IconButton color="inherit" edge="start" aria-label="GitHub Home" onClick={openGitHub}>
         <FaGithub/>        
@@ -379,9 +443,12 @@ const initVersion = () => {
           <Switch>
           <Route path='/entry/home'  component={() => <Home version={version}/>}/>
           <Route exact path='/entry/' component={() => <Home version={version}/>}/>
+          <Route exact path='/entry/null' component={() => <Home version={version}/>}/>
           <Route exact path='/entry/space' component={() => <Space version={version}/>}/>
           <Route exact path='/entry/session' component={() => <Session version={version}/>}/>
           <Route exact path='/entry/gallery' component={() => <Gallery version={version}/>}/>
+          <Route exact path='/entry/hints' component={() => <Hints version={version}/>}/>
+          <Route path='/entry/docs/:markdown' component={() => <Docs match={props.match} rest={rest} version={version}/>}/>
          /* <Route exact path='/entry/portal' component={() => <Portal version={version}/>}/> */
         </Switch>
         </main>

@@ -117,7 +117,20 @@ const styles = theme => ({
         width: 240,
         height: 328,
         margin: theme.spacing(1.5),
-    }
+    },
+    gcardContent: {
+        height: 68,
+    },
+    hcard: {
+        width: 240,
+        height: 328,
+        margin: theme.spacing(1.5),
+    },
+    hcardContent: {
+        height: 258,
+    },
+
+
 
 
 });
