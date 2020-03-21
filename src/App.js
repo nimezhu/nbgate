@@ -308,13 +308,14 @@ const initVersion = () => {
         initVersion()
         var p = getUrlParam("page")
         var r = getUrlParam("rest")
-        if (page !== null) {
+        if (p == null) {
+        } else {
             setPage(p)
-            if (r!== null) {
+            if (r == null) {
+                handleLink(p)()
+            } else {
                 setRest(r)
                 handleLink(p)(r)
-            } else {
-                handleLink(p)()
             }
         }
     },[])

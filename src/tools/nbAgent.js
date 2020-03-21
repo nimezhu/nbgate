@@ -31,7 +31,6 @@ function nbAgent() {
   var queryParas = {}
   var fetchDb = function(genome,db) {
     return new Promise(function(resolve,reject){
-      console.log(server,genome,db)
       fetch(server+"/"+genome+"/"+db+"/ls?attr=1",queryParas).then(function(d){
        return d.json()})
       .then(function(d){ 

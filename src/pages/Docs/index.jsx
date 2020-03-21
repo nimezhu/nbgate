@@ -10,6 +10,8 @@ import styles from "../../styles"
 
 import getUrlParam from "../../tools/getUrlParam.js"
 
+import Paper from "@material-ui/core/Paper"
+
 function Index(props) {
     const {
         classes,
@@ -18,10 +20,13 @@ function Index(props) {
     } = props
     const myRef = useRef()
     useEffect((d) => {
-        //TODO get match __
-        //let {markdown} = params.markdown
+        //TODO get match __ from GitHub Raw???
         var converter = new showdown.Converter()
-        var text
+        converter.setOption("tables",true)
+        converter.setFlavor("vanilla")
+        var text 
+        //TODO Change Static to GitHub Docs         
+        // With Buffer Version Control
         fetch("/static/markdown/"+rest+".md").then((d)=>(d.text())
         )
         .then(function(d){
@@ -36,9 +41,10 @@ function Index(props) {
         })
 
     }, [])
+    //TODO With Paper 
     return (
-        <div ref={myRef}>
-    </div>
+        <Paper ref={myRef} className={classes.paper}>
+    </Paper>
     );
 }
 

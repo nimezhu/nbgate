@@ -129,9 +129,9 @@ const styles = theme => ({
     hcardContent: {
         height: 258,
     },
-
-
-
+    paper: {
+        padding: 10,
+    }
 
 });
 
