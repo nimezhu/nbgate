@@ -287,9 +287,9 @@ const initVersion = () => {
               {label:"Home",id:'home',icon:<HomeIcon />},
               {label:"Browser",id:'browser', icon:<PlayIcon />},
               {label:"Session Space",id:'session', icon:<ViewCompactIcon />},
+              /*
               {label:"Panel Space",id:'space', icon:<DashboardIcon />},
-              {label:"Gallery",id:'gallery', icon:<GalleryIcon />},
-              {label:"Hints",id:'hints', icon:<HintsIcon />},
+              */
               ].map((d, index) => (
               <ListItem button key={d.id} onClick={handleNav(d.id)}>
                 <ListItemIcon>{d.icon}</ListItemIcon>
@@ -360,6 +360,8 @@ const initVersion = () => {
              <GalleryIcon/>
         </IconButton>
     </Tooltip>
+    {/* 
+    //TODO : PUt These to Develop Mode
    <Tooltip title="Hints">  
     <IconButton
             color="inherit"
@@ -370,7 +372,7 @@ const initVersion = () => {
              <HintsIcon/>
         </IconButton>
     </Tooltip>
-      <Tooltip title="Apps">  
+      <Tooltip title="Apps"> 
     <IconButton
             color="inherit"
             aria-label="Apps"
@@ -380,7 +382,6 @@ const initVersion = () => {
              <AppsIcon/>
         </IconButton>
     </Tooltip>
-
     <Tooltip title="Customized Web Pages">  
     <IconButton
             color="inherit"
@@ -391,6 +392,7 @@ const initVersion = () => {
              <DynamicFeedIcon/>
         </IconButton>
     </Tooltip>
+    */}
     <Tooltip title="Documentation">  
     <IconButton
             color="inherit"
