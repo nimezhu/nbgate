@@ -114,20 +114,22 @@ const styles = theme => ({
     margin: theme.spacing(0.5),
   },
     gcard: {
-        width: 240,
-        height: 328,
+        //width: 350,
+        //height: 528,
+        fontFamily: "Courier",
         margin: theme.spacing(1.5),
     },
     gcardContent: {
-        height: 68,
+        height: 168,
+        overflowY: "auto",
     },
     hcard: {
-        width: 240,
-        height: 328,
+        width: 350,
+        height: 428,
         margin: theme.spacing(1.5),
     },
     hcardContent: {
-        height: 258,
+        height: 358,
     },
     paper: {
         padding: 10,

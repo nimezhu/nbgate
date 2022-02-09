@@ -126,19 +126,25 @@ function ResponsiveDrawer(props) {
       window.open("https://github.com/nucleome")
     }
     function openDocs() {
-      window.open("https://nucleome-browser.readthedocs.io")
+      //TODO
+      window.open("https://nb-docs.readthedocs.io")
     }
+    function openTutorials() {
+        window.open("https://docs.google.com/document/d/11IU0I5kleg0y9R-k285_o9dt9W67iaBPty9FYsgEWaw/edit?usp=sharing")
+    }
+    /*
     function openApps() {
       window.open("/static/store")
     }
     function openStories() {
       window.open("/static/journal")
     }
+    */
     function openSlack() { // Modal Join or Enter
       window.open("https://join.slack.com/t/nucleome-browser/shared_invite/enQtNzY3NzQzOTczODc0LTZmYmNhYmJmYWVjZWMzNDY4MTQ5NmNmZmVmZTJhMzgyNjQwMGFiMDQ4ZWMwOWRjYjkzZjVjYjNmY2FkNGYxNWM")
     }
     function openGallery() {
-        handleLink("gallery")()
+        handleLink("examples")()
     }
     function openHome() {
         handleLink("home")()
@@ -217,9 +223,7 @@ const initVersion = () => {
    if (!swInited) {
     
     if (navigator.serviceWorker) {
-    console.log("ServiceWorkersSupported");
     var newWorker
-
     //Change it Notification Bar
     reloadRef.current.addEventListener('click', function() {
         newWorker.postMessage({
@@ -350,7 +354,7 @@ const initVersion = () => {
         </IconButton>
     </Tooltip>
 
-   <Tooltip title="Gallery">  
+   <Tooltip title="Examples">  
     <IconButton
             color="inherit"
             aria-label="Gallery"
@@ -393,6 +397,17 @@ const initVersion = () => {
         </IconButton>
     </Tooltip>
     */}
+    <Tooltip title="Tutorials">  
+    <IconButton
+            color="inherit"
+            aria-label="Hints"
+            edge="start"
+            onClick={openTutorials}
+            >
+             <HintsIcon/>
+        </IconButton>
+    </Tooltip>
+
     <Tooltip title="Documentation">  
     <IconButton
             color="inherit"
@@ -401,7 +416,7 @@ const initVersion = () => {
             onClick={openDocs}
             >
              <BookIcon/>
-            </IconButton>
+    </IconButton>
     </Tooltip>
   <Tooltip title="Slack">
     <IconButton color="inherit" edge="start" aria-label="Slack Home" onClick={openSlack}>
@@ -449,7 +464,7 @@ const initVersion = () => {
           <Route exact path='/entry/null' component={() => <Home version={version}/>}/>
           <Route exact path='/entry/space' component={() => <Space version={version}/>}/>
           <Route exact path='/entry/session' component={() => <Session version={version}/>}/>
-          <Route exact path='/entry/gallery' component={() => <Gallery version={version}/>}/>
+          <Route exact path='/entry/examples' component={() => <Gallery version={version}/>}/>
           <Route exact path='/entry/hints' component={() => <Hints version={version}/>}/>
           <Route path='/entry/docs/:markdown' component={() => <Docs match={props.match} rest={rest} version={version}/>}/>
          /* <Route exact path='/entry/portal' component={() => <Portal version={version}/>}/> */

@@ -13,16 +13,18 @@ class EntryDiv extends React.Component {
         super(props);
         var sheetId = props.sheetid || "1N_viSL6hDY_n75dVP4bfiLJ99SOPzIfqrka1JvJjv4E"
         var title = props.title || "Publish"
-        
+
         var self = this;
         this.state = {
             "d": []
         }
         this.sheetid = sheetId
         var apiKey = "AIzaSyBhECk4C1LpxI1mDJjSTwot-hRP2v3bwEA"
-        fetch("https://sheets.googleapis.com/v4/spreadsheets/" +
-            sheetId + "/values/" + title + "!A:C?key=" + apiKey).then(function(d){return d.json()}).then(function(d) {
-            
+        var url = "https://sheets.googleapis.com/v4/spreadsheets/" + sheetId + "/values/" + title + "!A:C?key=" + apiKey
+        var cors = "https://vis.nucleome.org/cors/"
+        fetch(url).then(function(d) {
+            return d.json()
+        }).then(function(d) {
             var t = d.values.map(function(d) {
                 return {
                     label: d[0],
@@ -32,12 +34,33 @@ class EntryDiv extends React.Component {
             self.setState({
                 "d": t
             })
-         }).catch(function(e){
-         })
+        }).catch(function(e) {
+            fetch(cors + url, {
+                    headers: {
+                        Origin: "https://vis.nucleome.org"
+                    }
+                }).then((d) => {
+                    return d.json()
+                })
+                .then((d) => {
+                    var t = d.values.map(function(d) {
+                        return {
+                            label: d[0],
+                            note: d[1]
+                        }
+                    })
+                    self.setState({
+                        "d": t
+                    })
+
+                }).catch((e)=>{
+                    self.setState({"d":[]})
+                })
+        })
 
 
     }
-    handleClick(d,sheetid) {
+    handleClick(d, sheetid) {
         return function() {
             var location = "/v1/main.html?config=gsheet:" + sheetid + ":" + d.label.replace(" ", "%20")
             window.location.href = location
