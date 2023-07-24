@@ -1,2 +1,3 @@
+!!! obsoleted
 # nbdoc
 # nbgate
